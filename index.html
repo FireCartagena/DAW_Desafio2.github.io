@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<!-- ----- CONFIGURACION DE LA PAGINA WEB ----- -->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta charset="UTF-8" />
+		
+		<!-- ----- ICON & NAME PAGE ----- -->
+		<title>Calculadora Presupuesto</title>
+		<link rel="SHORTCUT ICON" href="media/image/Page_icon.ico">
+		
+		<!-- ----- PLUGINS ----- -->
+		<!-- JQuery -->
+		<script src="plugins/jquery/jquery-3.7.1.js"></script>
+		
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.css">
+		<script src="plugins/bootstrap/js/bootstrap.js"></script>
+		
+		<!-- SweetAlert -->
+		<link rel="stylesheet" href="plugins/sweetalert/sweetalert2.css">
+		<script src="plugins/sweetalert/sweetalert2.js"></script>
+		
+		<!-- PERSONALIZACIONES CSS/JS -->
+		<link rel="stylesheet" href="css/index.css">
+		<script src="js/index.js"></script>
+		
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			<div class="row text-center mb-5">
+				<div class="col-md-2 col-12">&nbsp;</div>
+				
+				<div class="col-md-8 col-12">
+				<div>
+				<div class="col-md-12 col-12">
+					<h1>Presupuesto del mes de <span id="mesPagina">{MES}</span> <span id="anioPagina">{ANIO}</span></h1>
+				</div>
+				<div class="col-md-12 col-12">
+					<h2> Saldo disponible: $ <span id="disponible">500<span></span></h2>
+				</div>
+				<div class="col-md-12 col-12 mb-1">
+					<div class="row bg-primary text-white">
+						<div class="col-md-6 col-12">INGRESOS:</div>
+						<div class="col-md-6 col-12">+ <span id="ingresosMonto">800.00</span></div>
+					</div>
+				</div>
+				<div class="col-md-12 col-12">
+					<div class="row bg-danger text-white">
+						<div class="col-md-6 col-12">EGRESOS:</div>
+						<div class="col-md-6 col-12">- <span id="egresosMonto">300.00</span></div>
+					</div>
+				</div>
+				<div class="col-md-12 col-12">
+					<div class="row">
+						<div class="col-md-8 text-right">Porcentaje de gastos:</div>
+						<div class="col-md-4 text-left"><span class="btn badge badge-primary"><span id="porcentajeGasto">New</span> %</span></div>
+					</div>
+				</div>
+				</div>
+				</div>
+				<div class="col-md-2 col-12">&nbsp;</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-12 d-flex justify-content-center">
+					<div class="row">
+						
+						<form id="FormTransacciones" autocomplete="off">
+							<div class="form-group">
+								<h2>TRANSACCIÓN</h2>
+							</div>
+							<div class="form-group">
+								<select class="form-control" name="transaccion" id="transaccion" required>
+									<option disabled selected>INGRESO | EGRESO</option>
+									<option value="ING">INGRESO</option>
+									<option value="EGR">EGRESO</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripción" required>
+							</div>
+							<div class="form-group input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">$</div>
+								</div>
+								<input type="number" step=0.01 min=0.01 class="form-control" id="monto" name="monto" required>
+							</div>
+							<button type="submit" class="btn btn-block btn-primary">Agregar</button>
+						</form>
+						
+					</div>
+				</div>
+				<div class="col-md-6 col-12">
+					<ul class="nav nav-pills  mb-3" id="pills-tab" role="tablist">
+						<li class="nav-item" role="presentation">
+							<button class="nav-link active" id="tabIngresos" data-toggle="pill" data-target="#contIngresos" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Ingresos</button>
+						</li>
+						<li class="nav-item" role="presentation">
+							<button class="nav-link " id="tabEgresos" data-toggle="pill" data-target="#contEgresos" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Egresos</button>
+						</li>
+					</ul>
+					<div class="tab-content" id="pills-tabContent">
+						<div class="tab-pane fade show active" id="contIngresos" role="tabpanel" aria-labelledby="tabIngresos">
+							<div class="row">
+								<div class="col-12">
+									<h3 class="text-center">Ingresos</h3>
+								</div>
+							</div>
+							<div id="detalleIngresos">
+							</div>
+							<div>
+								<div class='row border border-success mb-1'>
+									<div class='col-8 text-right'>Total</div>
+									<div class='col-4 text-center'>$ <span id="totalIngresosLista"></span></div>
+								</div>
+							</div>
+							
+						</div>
+						<div class="tab-pane fade" id="contEgresos" role="tabpanel" aria-labelledby="tabEgresos">
+							<div class="row">
+								<div class="col-12">
+									<h3 class="text-center">Egresos</h3>
+								</div>
+							</div>
+							<div id="detalleEgresos">
+							</div>
+							<div>
+								<div class='row border border-success mb-1'>
+									<div class='col-8 text-right'>Total</div>
+									<div class='col-4 text-center'>$ <span id="totalEgresosLista"></span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer class="footer fixed-bottom mt-auto py-3 bg-light">
+    		<div class="container text-center">
+    			<span class="text-muted">© 2024 The coding crew, Inc.</span>
+    		</div>
+    	</footer>
+	</body>
+</html>
